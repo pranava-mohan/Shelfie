@@ -1,0 +1,21 @@
+# Use the official Golang image as the base image
+FROM golang:1.25-alpine
+
+# Install Air for hot reloading
+RUN go install github.com/air-verse/air@latest
+
+# Set the Current Working Directory inside the container
+WORKDIR /app
+
+# Copy the go.mod and go.sum files and download dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port your Fiber app runs on
+EXPOSE 8000
+
+# Command to run Air, which watches and rebuilds the app
+CMD ["air", "-c", ".air.toml"]

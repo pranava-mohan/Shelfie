@@ -1,0 +1,21 @@
+services:
+  go-fiber-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: go-fiber-dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+
+  mongodb:
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
