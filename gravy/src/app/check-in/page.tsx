@@ -65,7 +65,7 @@ export default function CheckInPage() {
       (async () => {
         await kioskClient.post("/book/check-in", {
           user_id: user?.id,
-          book_ids: books.map((b) => b.id),
+          book_ids: (books || []).map((b) => b.id),
         });
         reset();
       })(),
@@ -86,7 +86,7 @@ export default function CheckInPage() {
             onScan={async (result) => {
               if (
                 result[0].rawValue &&
-                !books.find((b) => b.id === result[0].rawValue)
+                !(books || []).find((b) => b.id === result[0].rawValue)
               ) {
                 toast.promise(
                   (async () => {
@@ -144,7 +144,7 @@ export default function CheckInPage() {
                   </button>
 
                   <button
-                    disabled={books.length === 0 || checkingIn}
+                    disabled={(books || []).length === 0 || checkingIn}
                     onClick={() => {
                       setCheckingIn(true);
                       checkInBooks().finally(() => setCheckingIn(false));
@@ -163,7 +163,7 @@ export default function CheckInPage() {
                     Add Books
                   </button>
 
-                  {books.map((book) => (
+                  {(books || []).map((book) => (
                     <div
                       key={book.id}
                       className="flex w-full py-2 mt-4 border-b border-gray-300"

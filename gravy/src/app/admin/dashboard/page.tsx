@@ -186,7 +186,7 @@ export default function AdminDashboard() {
             author: '',
             publisher: '',
             isbn: '',
-            shelf_id: shelves.length > 0 ? shelves[0].id : '',
+            shelf_id: (shelves || []).length > 0 ? shelves[0].id : '',
             row: 1,
             column: 1
         });
@@ -251,8 +251,8 @@ export default function AdminDashboard() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                            {books.map((book) => {
-                                const shelf = shelves.find(s => s.id === book.shelf_id);
+                            {(books || []).map((book) => {
+                                const shelf = (shelves || []).find(s => s.id === book.shelf_id);
                                 return (
                                     <tr key={book.id}>
                                         <td className="whitespace-nowrap px-6 py-4">{book.title}</td>
@@ -275,7 +275,7 @@ export default function AdminDashboard() {
                                     </tr>
                                 )
                             })}
-                            {books.length === 0 && (
+                            {(books || []).length === 0 && (
                                 <tr>
                                     <td colSpan={5} className="px-6 py-4 text-center text-gray-500">No books found.</td>
                                 </tr>
@@ -379,7 +379,7 @@ export default function AdminDashboard() {
                                     required
                                 >
                                     <option value="" disabled>Select Shelf</option>
-                                    {shelves.map(shelf => (
+                                    {(shelves || []).map(shelf => (
                                         <option key={shelf.id} value={shelf.id}>{shelf.address}</option>
                                     ))}
                                 </select>
@@ -442,7 +442,7 @@ export default function AdminDashboard() {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {shelves.map(shelf => (
+                                    {(shelves || []).map(shelf => (
                                         <tr key={shelf.id}>
                                             <td className="px-4 py-3">{shelf.address}</td>
                                             <td className="px-4 py-3 text-right">
@@ -451,7 +451,7 @@ export default function AdminDashboard() {
                                             </td>
                                         </tr>
                                     ))}
-                                    {shelves.length === 0 && (
+                                    {(shelves || []).length === 0 && (
                                         <tr><td colSpan={2} className="px-4 py-2 text-center text-gray-400">No shelves found</td></tr>
                                     )}
                                 </tbody>

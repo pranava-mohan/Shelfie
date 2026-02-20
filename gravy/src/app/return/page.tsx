@@ -34,7 +34,7 @@ export default function ReturnPage() {
     return toast.promise(
       (async () => {
         await kioskClient.post("/book/return", {
-          book_ids: books.map((b) => b.id),
+          book_ids: (books || []).map((b) => b.id),
         });
         reset();
       })(),
@@ -55,7 +55,7 @@ export default function ReturnPage() {
             onScan={async (result) => {
               if (
                 result[0].rawValue &&
-                !books.find((b) => b.id === result[0].rawValue)
+                !(books || []).find((b) => b.id === result[0].rawValue)
               ) {
                 toast.promise(
                   (async () => {
@@ -99,7 +99,7 @@ export default function ReturnPage() {
                 </button>
 
                 <button
-                  disabled={books.length === 0 || returning}
+                  disabled={(books || []).length === 0 || returning}
                   onClick={() => {
                     setReturning(true);
                     returnBooks().finally(() => setReturning(false));
@@ -118,7 +118,7 @@ export default function ReturnPage() {
                   Add Books
                 </button>
 
-                {books.map((book) => (
+                {(books || []).map((book) => (
                   <div
                     key={book.id}
                     className="flex w-full py-2 mt-4 border-b border-gray-300"
