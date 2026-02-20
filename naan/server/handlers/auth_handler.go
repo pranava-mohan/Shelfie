@@ -203,8 +203,9 @@ func GoogleCallback(c *fiber.Ctx) error {
 	update := bson.M{
 		"$set": bson.M{
 			"google_id": userRes.ID,
-			"name":      userRes.Name, // Update name/picture if desired, but sticking to basics for now
+			"name":      userRes.Name,
 			"email":     userRes.Email,
+			"picture":   userRes.Picture,
 		},
 		"$setOnInsert": bson.M{
 			"createdAt": time.Now(),

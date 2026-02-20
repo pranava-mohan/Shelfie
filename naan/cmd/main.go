@@ -52,7 +52,11 @@ type UserCheckInReq struct {
 func main() {
 	config.LoadEnv()
 	app := fiber.New()
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowMethods: "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
+		AllowHeaders: "*",
+	}))
 
 	config.ConnectDB()
 

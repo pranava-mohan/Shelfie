@@ -43,6 +43,30 @@ func GetUser(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(user)
 }
 
+func GetProfile(c *fiber.Ctx) error {
+	userIDString := services.GetUserID(c)
+	if userIDString == "" {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Unauthorized"})
+	}
+
+	userObjID, err := bson.ObjectIDFromHex(userIDString)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid user ID"})
+	}
+
+	userCollection := config.GetUserCollection()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	var user models.User
+	err = userCollection.FindOne(ctx, bson.M{"_id": userObjID}).Decode(&user)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(user)
+}
+
 /*
 output:
 

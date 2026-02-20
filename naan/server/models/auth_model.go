@@ -10,6 +10,7 @@ type User struct {
 	ID        bson.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	Name      string        `bson:"name" json:"name"`
 	Email     string        `bson:"email" json:"email"`
+	Picture   string        `bson:"picture" json:"picture"`
 	Phone     string        `bson:"phone" json:"phone"`
 	DauthID   string        `bson:"dauth_id" json:"dauth_id"`
 	GoogleID  string        `bson:"google_id" json:"google_id"`

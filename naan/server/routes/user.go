@@ -10,6 +10,7 @@ func InitUser(api fiber.Router) {
 	api = api.Group("/user")
 
 	api.Post("/", handlers.GetUser)
+	api.Get("/profile", handlers.GetProfile)
 	api.Post("/my-books", handlers.GetMyBooks)
 
 }
