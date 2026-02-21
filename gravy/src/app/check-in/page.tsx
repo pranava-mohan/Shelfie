@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Modal } from "react-responsive-modal";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import toast from "react-hot-toast";
+import { WS_URL } from "@/config";
 
 export default function CheckInPage() {
   const [roomId, setRoomId] = useState("");
@@ -30,7 +31,7 @@ export default function CheckInPage() {
   >([]);
 
   useWebSocket(
-    "ws://localhost:8000/ws/" + roomId,
+    WS_URL + roomId,
     {
       onMessage: async (msg) => {
         setLoading(true);
