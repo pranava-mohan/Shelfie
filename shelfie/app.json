@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Shelfie",
+    "name": "shelfie",
     "slug": "shelfie",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -40,7 +40,8 @@
           }
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -36,8 +36,14 @@ export default function Index() {
     };
   }, []);
 
-  const handleDauthLogin = () => {
-    WebBrowser.openAuthSessionAsync(AUTH.GOOGLE_URL);
+  const handleDauthLogin = async () => {
+    try {
+      const redirectUrl = Linking.createURL("auth");
+      if (!AUTH.GOOGLE_URL) throw new Error("Google Auth URL is not defined");
+      await WebBrowser.openAuthSessionAsync(AUTH.GOOGLE_URL, redirectUrl);
+    } catch (e: any) {
+      alert("Error opening browser: " + (e.message || String(e)));
+    }
   };
 
   return (
